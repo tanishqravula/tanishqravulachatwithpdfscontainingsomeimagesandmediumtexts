@@ -14,6 +14,8 @@ from functions import convert_pdf_to_txt_pages, convert_pdf_to_txt_file, save_pa
 import fitz  # PyMuPDF
 import pdf2image
 from pdf2image.exceptions import PDFPageCountError
+import asyncio
+
 
 load_dotenv()
 
@@ -72,12 +74,15 @@ def clear_chat_history():
     st.session_state.messages = [
         {"role": "assistant", "content": "Ask Questions from the PDF Files uploaded .. ✍️📝"}]
 
-def user_input(user_question):
+async def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     
     try:
-        new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True) # Set allow_dangerous_deserialization=True
+        new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
         docs = new_db.similarity_search(user_question)
+
+        if not docs:
+            return "No relevant documents found."
 
         chain = get_conversational_chain()
 
@@ -86,11 +91,15 @@ def user_input(user_question):
             return_only_outputs=True
         )
 
-        #st.write("Reply: ", response["output_text"])
-        return response
+        if not response or 'output_text' not in response:
+            return "No valid response generated."
+
+        return response['output_text']
 
     except Exception as e:
         st.error(f"Error occurred: {e}")
+        return None
+
 
 
 def main():
