@@ -12,3 +12,4 @@ html2text
 PyMuPDF
 Pillow
 chromadb
+langchain-community
