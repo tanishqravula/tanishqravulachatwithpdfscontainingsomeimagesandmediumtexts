@@ -72,7 +72,7 @@ def get_conversational_chain():
 
 def clear_chat_history():
     st.session_state.messages = [
-        {"role": "assistant", "content": "Ask Questions from the PDF Files uploaded .. ✍️📝"}]
+        {"role": "assistant", "content": "Ask Questions from the PDF Files uploaded .. ✍️📝 like example of prompt-explain (concept or topic) as per the context briefly in N(N=500 or 100 or 200 or 400 or 300 or 1000 etc..) words or prompt-explain the concept of (topic or concept name) as per the context briefly in N(N= number) words"}]
 
 async def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
