@@ -65,7 +65,7 @@ def get_conversational_chain():
 
 def clear_chat_history():
     st.session_state.messages = [
-        {"role": "assistant", "content": "Ask Questions from the PDF Files uploaded .. ✍️📝 like example of prompt-explain (concept or topic) as per the context briefly in N(N=500 or 100 or 200 or 400 or 300 or 1000 etc..) words or prompt-explain the concept of (topic or concept name) as per the context briefly in N(N= number) words or write a full fledged code based on this information given"}]
+        {"role": "assistant", "content": "Ask Questions from the PDF Files uploaded .. ✍️📝 like example of prompt-explain (concept or topic) as per the context briefly in N(N=500 or 100 or 200 or 400 or 300 or 1000 etc..) words or prompt-explain the concept of (topic or concept name) as per the context briefly in N(N= number) words or write a full fledged code based on this information given or Explain Chapter 2 Introduction to the Relational Model as per the context in 11000-16000 words.plzz don't involve any outside knowledge or outside information plzz include all the context u write from this pdf only plzz.i have exam on this topic if I write outside content that is not there in book I will get 0 marks.so plzzz help me"}]
 
 async def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
@@ -116,7 +116,7 @@ def main():
 
     if "messages" not in st.session_state:
         st.session_state.messages = [
-            {"role": "assistant", "content": "Ask Questions from the PDF Files uploaded .. ✍️📝 like example of prompt-explain (concept or topic) as per the context briefly in N(N=500 or 100 or 200 or 400 or 300 or 1000 etc..) words or prompt-explain the concept of (topic or concept name) as per the context briefly in N(N= number) words or write a full fledged code based on this information given"}]
+            {"role": "assistant", "content": "Ask Questions from the PDF Files uploaded .. ✍️📝 like example of prompt-explain (concept or topic) as per the context briefly in N(N=500 or 100 or 200 or 400 or 300 or 1000 etc..) words or prompt-explain the concept of (topic or concept name) as per the context briefly in N(N= number) words or write a full fledged code based on this information given or Explain Chapter 3: Introduction to SQL as per the context in 11000-16000 words.plzz don't involve any outside knowledge or outside information plzz include all the context u write from this pdf only plzz.i have exam on this topic if I write outside content that is not there in book I will get 0 marks.so plzzz help me"}]
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
