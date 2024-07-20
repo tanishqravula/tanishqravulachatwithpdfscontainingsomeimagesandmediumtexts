@@ -37,7 +37,8 @@ def get_pdf_text(pdf_docs):
     return text
 
 def get_text_chunks(text):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
+    # Increased chunk size to handle larger text amounts
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=50000, chunk_overlap=5000) 
     chunks = text_splitter.split_text(text)
     return chunks
 
@@ -57,7 +58,8 @@ def get_conversational_chain():
     Answer:
     """
 
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.9)
+    # Using a more powerful model for longer responses
+    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.9) 
     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
 
@@ -69,7 +71,7 @@ def clear_chat_history():
 
 async def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    
+
     try:
         new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
         docs = new_db.similarity_search(user_question)
@@ -102,14 +104,14 @@ def main():
         st.write("---")
         st.title("📁 PDF File's Section")
         pdf_docs = st.file_uploader("Upload your PDF Files & \n Click on the Submit & Process Button ", accept_multiple_files=True)
-        
+
         if st.button("Submit & Process"):
             with st.spinner("Processing..."):
                 raw_text = get_pdf_text(pdf_docs)
                 text_chunks = get_text_chunks(raw_text)
                 get_vector_store(text_chunks)
                 st.success("Processing completed successfully!")
-        
+
         st.write("---")
         st.write("Tanishq Ravulas AI PDF Chatbot")
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
