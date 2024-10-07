@@ -43,7 +43,7 @@ def get_text_chunks(text):
     return chunks
 
 def get_vector_store(text_chunks):
-    embeddings = genai.embed_content(model="models/text-embedding-004", task_type="retrieval_document")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", task_type="retrieval_document")
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     vector_store.save_local("faiss_index")
 
@@ -70,7 +70,7 @@ def clear_chat_history():
         {"role": "assistant", "content": "Ask Questions from the PDF Files uploaded .. ✍️📝 like example of prompt-explain (concept or topic) as per the context briefly in N(N=500 or 100 or 200 or 400 or 300 or 1000 etc..) words or prompt-explain the concept of (topic or concept name) as per the context briefly in N(N= number) words or write a full fledged code based on this information given or Explain Chapter 2 Introduction to the Relational Model as per the context in 11000-16000 words.plzz don't involve any outside knowledge or outside information plzz include all the context u write from this pdf only plzz.i have exam on this topic if I write outside content that is not there in book I will get 0 marks.so plzzz help me"}]
 
 async def user_input(user_question):
-    embeddings = genai.embed_content(model="models/text-embedding-004", task_type="retrieval_document")
+    embeddings =GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", task_type="retrieval_document")
 
     try:
         new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
